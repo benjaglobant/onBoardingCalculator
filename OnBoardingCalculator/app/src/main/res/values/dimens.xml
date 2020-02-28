@@ -2,20 +2,28 @@
 <resources>
     <dimen name="visor_layour_width">408dp</dimen>
     <dimen name="visor_layout_height">60dp</dimen>
-    <dimen name="visor_layout_margintop">52dp</dimen>
+    <dimen name="visor_layout_margintop">20dp</dimen>
     <dimen name="btn_marginstart">72dp</dimen>
     <dimen name="btn_marginleft">72dp</dimen>
     <dimen name="btn_margintop">392dp</dimen>
-    <dimen name="btn_layout_midth">100dp</dimen>
-    <dimen name="btn_layout_heigth">70dp</dimen>
+    <dimen name="btn_num_layout_width">135dp</dimen>
+    <dimen name="btn_num_layout_heigth">60dp</dimen>
+    <dimen name="btn_op_layout_width">100dp</dimen>
+    <dimen name="btn_op_layout_heigth">50dp</dimen>
     <dimen name="btn_textsize">35sp</dimen>
     <dimen name="btn_seven_layout_marginleft">60dp</dimen>
     <dimen name="btn_seven_layout_marginstart">60dp</dimen>
-    <dimen name="btn_seven_margintop">324dp</dimen>
+    <dimen name="btn_seven_margintop">185dp</dimen>
     <dimen name="btn_divide_marginend">4dp</dimen>
     <dimen name="btn_divide_marginright">4dp</dimen>
     <dimen name="btn_plus_marginstart">4dp</dimen>
-    <dimen name="btn_plus_marginleft">4dp</dimen>
-    <dimen name="btn_plus_margintop">76dp</dimen>
-    <dimen name="btn_clear_margintop">15dp</dimen>
+    <dimen name="btn_plus_marginleft">5dp</dimen>
+    <dimen name="btn_plus_margintop">20dp</dimen>
+    <dimen name="btn_clear_margintop">45dp</dimen>
+    <dimen name="btn_clear_layout_width">150dp</dimen>
+    <dimen name="btn_clear_layout_heigth">100dp</dimen>
+    <dimen name="border_size_width">100dp</dimen>
+    <dimen name="border_size_heigth">35dp</dimen>
+    <dimen name="border_stroke_width">2dp</dimen>
+    <dimen name="border_corner_radius">5dp</dimen>
 </resources>

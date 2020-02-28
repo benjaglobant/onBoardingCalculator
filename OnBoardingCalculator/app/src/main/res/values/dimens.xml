@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="visor_layour_width">408dp</dimen>
+    <dimen name="visor_layout_height">60dp</dimen>
+    <dimen name="visor_layout_margintop">52dp</dimen>
+    <dimen name="btn_marginstart">72dp</dimen>
+    <dimen name="btn_marginleft">72dp</dimen>
+    <dimen name="btn_margintop">392dp</dimen>
+    <dimen name="btn_layout_midth">100dp</dimen>
+    <dimen name="btn_layout_heigth">70dp</dimen>
+    <dimen name="btn_textsize">35sp</dimen>
+    <dimen name="btn_seven_layout_marginleft">60dp</dimen>
+    <dimen name="btn_seven_layout_marginstart">60dp</dimen>
+    <dimen name="btn_seven_margintop">324dp</dimen>
+    <dimen name="btn_divide_marginend">4dp</dimen>
+    <dimen name="btn_divide_marginright">4dp</dimen>
+    <dimen name="btn_plus_marginstart">4dp</dimen>
+    <dimen name="btn_plus_marginleft">4dp</dimen>
+    <dimen name="btn_plus_margintop">76dp</dimen>
+</resources>

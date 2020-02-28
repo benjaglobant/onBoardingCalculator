@@ -16,4 +16,5 @@
     <string name="sub">-</string>
     <string name="divide">/</string>
     <string name="multiply">X</string>
+    <string name="clear">CLEAR</string>
 </resources>

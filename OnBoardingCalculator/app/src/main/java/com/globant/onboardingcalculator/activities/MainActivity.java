@@ -26,89 +26,86 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_0)
-    public void pressedZero(){
+    public void pressedZero() {
         presenter.onNumberPressed(Constants.NUMBER_ZERO);
     }
 
     @OnClick(R.id.btn_1)
-    public void pressedOne(){
+    public void pressedOne() {
         presenter.onNumberPressed(Constants.NUMBER_ONE);
     }
 
     @OnClick(R.id.btn_2)
-    public void pressedTwo(){
+    public void pressedTwo() {
         presenter.onNumberPressed(Constants.NUMBER_TWO);
     }
 
     @OnClick(R.id.btn_3)
-    public void pressedThree(){
+    public void pressedThree() {
         presenter.onNumberPressed(Constants.NUMBER_THREE);
     }
 
     @OnClick(R.id.btn_4)
-    public void pressedFour(){
+    public void pressedFour() {
         presenter.onNumberPressed(Constants.NUMBER_FOUR);
     }
 
     @OnClick(R.id.btn_5)
-    public void pressedFive(){
+    public void pressedFive() {
         presenter.onNumberPressed(Constants.NUMBER_FIVE);
     }
 
     @OnClick(R.id.btn_6)
-    public void pressedSix(){
+    public void pressedSix() {
         presenter.onNumberPressed(Constants.NUMBER_SIX);
     }
 
     @OnClick(R.id.btn_7)
-    public void pressedSeven(){
+    public void pressedSeven() {
         presenter.onNumberPressed(Constants.NUMBER_SEVEN);
     }
 
     @OnClick(R.id.btn_8)
-    public void pressedEight(){
+    public void pressedEight() {
         presenter.onNumberPressed(Constants.NUMBER_EIGHT);
     }
 
     @OnClick(R.id.btn_9)
-    public void pressedNine(){
+    public void pressedNine() {
         presenter.onNumberPressed(Constants.NUMBER_NINE);
     }
 
     @OnClick(R.id.btn_plus)
-    public void pressedPlus(){
+    public void pressedPlus() {
         presenter.onOperatorPressed(Constants.OPERATOR_PLUS);
     }
 
     @OnClick(R.id.btn_sub)
-    public void pressedSub(){
+    public void pressedSub() {
         presenter.onOperatorPressed(Constants.OPERATOR_SUBSTRACTION);
     }
 
     @OnClick(R.id.btn_multiply)
-    public void pressedMultiply(){
+    public void pressedMultiply() {
         presenter.onOperatorPressed(Constants.OPERATOR_MULTIPLY);
     }
 
     @OnClick(R.id.btn_divide)
-    public void pressedDivide(){
+    public void pressedDivide() {
         presenter.onOperatorPressed(Constants.OPERATOR_DIVIDE);
     }
 
     @OnClick(R.id.btn_clear)
-    public void pressedClear(){
+    public void pressedClear() {
         presenter.onClearPressed();
     }
 
     @OnClick(R.id.btn_point)
-    public void pressedPoint(){
+    public void pressedPoint() {
     }
 
     @OnClick(R.id.btn_equal)
-    public void pressedEqual(){
+    public void pressedEqual() {
     }
 
 }
-
-
-

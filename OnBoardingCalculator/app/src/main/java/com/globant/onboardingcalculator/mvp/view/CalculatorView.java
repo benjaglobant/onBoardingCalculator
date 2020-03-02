@@ -2,6 +2,7 @@ package com.globant.onboardingcalculator.mvp.view;
 
 import android.app.Activity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.globant.onboardingcalculator.R;
 import com.globant.onboardingcalculator.mvp.view.base.ActivityView;
@@ -25,5 +26,9 @@ public class CalculatorView extends ActivityView {
 
     public void refreshVisor(String operand) {
         visor.setText(operand);
+    }
+
+    public void showMathError() {
+        Toast.makeText(getContext(), R.string.error_msj, Toast.LENGTH_LONG).show();
     }
 }

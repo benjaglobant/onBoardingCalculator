@@ -17,4 +17,5 @@
     <string name="btn_text_divide">/</string>
     <string name="btn_text_multiply">X</string>
     <string name="btn_text_clear">CLEAR</string>
+    <string name="error_msj">Error: No se debe dividir por cero.</string>
 </resources>

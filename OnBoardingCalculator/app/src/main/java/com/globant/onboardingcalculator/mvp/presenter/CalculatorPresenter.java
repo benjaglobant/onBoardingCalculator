@@ -34,4 +34,14 @@ public class CalculatorPresenter {
             view.refreshVisor(model.getSecondOperand());
         }
     }
+
+    public void onEqualPressed() {
+        if (!model.emptyOperation()) {
+            model.operate();
+            if (model.getFirstOperand().equals(Constants.MATH_ERROR))
+                view.showMathError();
+            else
+                view.refreshVisor(model.getFirstOperand());
+        }
+    }
 }

@@ -2,6 +2,8 @@ package com.globant.onboardingcalculator.mvp.model;
 
 import com.globant.onboardingcalculator.utils.Constants;
 
+import static java.lang.Double.parseDouble;
+
 public class CalculatorModel {
     private String firstOperand;
     private String secondOperand;
@@ -55,5 +57,34 @@ public class CalculatorModel {
 
     public char getOperator() {
         return operator;
+    }
+
+    public void operate() {
+        Double result;
+        switch (operator) {
+            case Constants.OPERATOR_PLUS:
+                result = parseDouble(firstOperand) + parseDouble(secondOperand);
+                clearOperation();
+                setFirstOperand(String.valueOf(result));
+                break;
+            case Constants.OPERATOR_SUBSTRACTION:
+                result = parseDouble(firstOperand) - parseDouble(secondOperand);
+                clearOperation();
+                setFirstOperand(String.valueOf(result));
+                break;
+            case Constants.OPERATOR_MULTIPLY:
+                result = parseDouble(firstOperand) * parseDouble(secondOperand);
+                clearOperation();
+                setFirstOperand(String.valueOf(result));
+                break;
+            case Constants.OPERATOR_DIVIDE:
+                if (parseDouble(secondOperand) != 0) {
+                    result = parseDouble(firstOperand) / parseDouble(secondOperand);
+                    clearOperation();
+                    setFirstOperand(String.valueOf(result));
+                } else
+                    firstOperand = Constants.MATH_ERROR;
+                break;
+        }
     }
 }

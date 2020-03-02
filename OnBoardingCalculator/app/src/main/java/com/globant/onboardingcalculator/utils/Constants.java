@@ -13,6 +13,8 @@ public class Constants {
     public static final String NUMBER_EIGHT = "8";
     public static final String NUMBER_NINE = "9";
     public static final String NUMBER_ZERO = "0";
+    public static final String DECIMAL_POINT = ".";
+    public static final String MATH_ERROR = "MATH ERROR";
     public static final char OPERATOR_PLUS = '+';
     public static final char OPERATOR_SUBSTRACTION = '-';
     public static final char OPERATOR_DIVIDE = '/';

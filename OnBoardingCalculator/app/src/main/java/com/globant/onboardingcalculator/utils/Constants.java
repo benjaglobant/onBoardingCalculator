@@ -17,5 +17,4 @@ public class Constants {
     public static final char OPERATOR_SUBSTRACTION ='-';
     public static final char OPERATOR_DIVIDE ='/';
     public static final char OPERATOR_MULTIPLY ='x';
-    public static final int MAX_SIZE_OPERAND = 5;
 }

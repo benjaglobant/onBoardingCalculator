@@ -72,14 +72,14 @@ public class CalculatorPresenter {
                     } else {
                         model.clearOperation();
                         view.showMathError();
-                        break;
                     }
+                    break;
             }
         view.refreshVisor(model.getResult());
     }
 
     public void onPointPressed() {
-        if (!model.getResult().equals(EMPTY_STRING) && (model.getOperator() == EMPTY_CHAR))
+        if (!model.getResult().isEmpty() && (model.getOperator() == EMPTY_CHAR))
             view.showOperatorErrorAfterEqualPressed();
         else if (model.getOperator() == EMPTY_CHAR) {
                 if (model.getFirstOperand().isEmpty()) {

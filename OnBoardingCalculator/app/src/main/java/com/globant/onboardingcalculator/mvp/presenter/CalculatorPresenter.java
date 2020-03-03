@@ -20,17 +20,14 @@ public class CalculatorPresenter {
 
     private CalculatorModel model;
     private CalculatorView view;
-    private String result;
     private DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public CalculatorPresenter(CalculatorModel model, CalculatorView view) {
         this.model = model;
         this.view = view;
-        result = EMPTY_STRING;
     }
 
     public void onClearPressed() {
-        result = EMPTY_STRING;
         model.clearOperation();
         view.clearVisor();
     }
@@ -45,7 +42,7 @@ public class CalculatorPresenter {
     }
 
     public void onNumberPressed(String number) {
-        if (!result.equals(EMPTY_STRING) && (model.getOperator() == EMPTY_CHAR))
+        if (!model.getResult().equals(EMPTY_STRING) && (model.getOperator() == EMPTY_CHAR))
             view.showOperatorErrorAfterEqualPressed();
         else if (model.getOperator() == EMPTY_CHAR) {
             model.setFirstOperand(number);
@@ -60,21 +57,18 @@ public class CalculatorPresenter {
         if (!model.emptyOperation())
             switch (model.getOperator()) {
                 case OPERATOR_PLUS:
-                    result = String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) + parseDouble(model.getSecondOperand())));
-                    model.operate(result);
+                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) + parseDouble(model.getSecondOperand()))));
                     break;
                 case OPERATOR_SUBSTRACTION:
-                    result = String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand())));
-                    model.operate(result);
+                    String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand())));
+                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand()))));
                     break;
                 case OPERATOR_MULTIPLY:
-                    result = String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) * parseDouble(model.getSecondOperand())));
-                    model.operate(result);
+                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) * parseDouble(model.getSecondOperand()))));
                     break;
                 case OPERATOR_DIVIDE:
                     if (parseDouble(model.getSecondOperand()) != parseDouble(NUMBER_ZERO)) {
-                        result = String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand())));
-                        model.operate(result);
+                        model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand()))));
                     } else {
                         model.clearOperation();
                         view.showMathError();
@@ -85,7 +79,7 @@ public class CalculatorPresenter {
     }
 
     public void onPointPressed() {
-        if (!result.equals(EMPTY_STRING) && (model.getOperator() == EMPTY_CHAR))
+        if (!model.getResult().equals(EMPTY_STRING) && (model.getOperator() == EMPTY_CHAR))
             view.showOperatorErrorAfterEqualPressed();
         else if (model.getOperator() == EMPTY_CHAR) {
                 if (model.getFirstOperand().isEmpty()) {

@@ -52,4 +52,8 @@ public class CalculatorView extends ActivityView {
     public void showOperatorError() {
         Toast.makeText(getContext(), R.string.operator_error_msj, Toast.LENGTH_LONG).show();
     }
+
+    public void showOperatorErrorAfterEqualPressed(){
+        Toast.makeText(getContext(), R.string.operator_error_after_equal_pressed, Toast.LENGTH_LONG).show();
+    }
 }

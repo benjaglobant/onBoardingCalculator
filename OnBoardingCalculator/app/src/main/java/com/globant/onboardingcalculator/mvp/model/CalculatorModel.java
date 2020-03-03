@@ -1,7 +1,15 @@
 package com.globant.onboardingcalculator.mvp.model;
 
-import com.globant.onboardingcalculator.utils.Constants;
+import java.text.DecimalFormat;
 
+import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
+import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
+import static com.globant.onboardingcalculator.utils.Constants.MATH_ERROR;
+import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
+import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_DIVIDE;
+import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_MULTIPLY;
+import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_PLUS;
+import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_SUBSTRACTION;
 import static java.lang.Double.parseDouble;
 
 public class CalculatorModel {
@@ -9,24 +17,26 @@ public class CalculatorModel {
     private String secondOperand;
     private char operator;
 
+    private DecimalFormat df = new DecimalFormat("#.##");
+
     public CalculatorModel() {
-        firstOperand = Constants.EMPTY_STRING;
-        secondOperand = Constants.EMPTY_STRING;
-        operator = Constants.EMPTY_CHAR;
+        firstOperand = EMPTY_STRING;
+        secondOperand = EMPTY_STRING;
+        operator = EMPTY_CHAR;
     }
 
     public boolean emptyOperation() {
-        if (firstOperand.equals(Constants.EMPTY_STRING)) {
-            if (secondOperand.equals(Constants.EMPTY_STRING))
-                return operator == Constants.EMPTY_CHAR;
+        if (firstOperand.equals(EMPTY_STRING)) {
+            if (secondOperand.equals(EMPTY_STRING))
+                return operator == EMPTY_CHAR;
         }
         return false;
     }
 
     public void clearOperation() {
-        firstOperand = Constants.EMPTY_STRING;
-        secondOperand = Constants.EMPTY_STRING;
-        operator = Constants.EMPTY_CHAR;
+        firstOperand = EMPTY_STRING;
+        secondOperand = EMPTY_STRING;
+        operator = EMPTY_CHAR;
     }
 
     public void setOperator(char operator) {
@@ -34,14 +44,14 @@ public class CalculatorModel {
     }
 
     public void setFirstOperand(String firstOperand) {
-        if (this.firstOperand.equals(Constants.EMPTY_STRING))
+        if (this.firstOperand.equals(EMPTY_STRING))
             this.firstOperand = firstOperand;
         else
             this.firstOperand = this.firstOperand + firstOperand;
     }
 
     public void setSecondOperand(String secondOperand) {
-        if (this.secondOperand.equals(Constants.EMPTY_STRING))
+        if (this.secondOperand.equals(EMPTY_STRING))
             this.secondOperand = secondOperand;
         else
             this.secondOperand = this.secondOperand + secondOperand;
@@ -62,28 +72,28 @@ public class CalculatorModel {
     public void operate() {
         Double result;
         switch (operator) {
-            case Constants.OPERATOR_PLUS:
+            case OPERATOR_PLUS:
                 result = parseDouble(firstOperand) + parseDouble(secondOperand);
                 clearOperation();
-                setFirstOperand(String.valueOf(result));
+                setFirstOperand(String.valueOf(df.format(result)));
                 break;
-            case Constants.OPERATOR_SUBSTRACTION:
+            case OPERATOR_SUBSTRACTION:
                 result = parseDouble(firstOperand) - parseDouble(secondOperand);
                 clearOperation();
-                setFirstOperand(String.valueOf(result));
+                setFirstOperand(String.valueOf(df.format(result)));
                 break;
-            case Constants.OPERATOR_MULTIPLY:
+            case OPERATOR_MULTIPLY:
                 result = parseDouble(firstOperand) * parseDouble(secondOperand);
                 clearOperation();
-                setFirstOperand(String.valueOf(result));
+                setFirstOperand(String.valueOf(df.format(result)));
                 break;
-            case Constants.OPERATOR_DIVIDE:
-                if (parseDouble(secondOperand) != 0) {
+            case OPERATOR_DIVIDE:
+                if (parseDouble(secondOperand) != parseDouble(NUMBER_ZERO)) {
                     result = parseDouble(firstOperand) / parseDouble(secondOperand);
                     clearOperation();
-                    setFirstOperand(String.valueOf(result));
+                    setFirstOperand(String.valueOf(df.format(result)));
                 } else
-                    firstOperand = Constants.MATH_ERROR;
+                    firstOperand = MATH_ERROR;
                 break;
         }
     }

@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_point)
     public void pressedPoint() {
-        presenter.onNumberPressed(Constants.DECIMAL_POINT);
+        presenter.onPointPressed();
     }
 
     @OnClick(R.id.btn_equal)

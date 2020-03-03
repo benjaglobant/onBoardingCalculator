@@ -32,10 +32,6 @@ public class CalculatorView extends ActivityView {
         visor.setText(operand);
     }
 
-    public void showMathError() {
-        Toast.makeText(getContext(), R.string.error_msj, Toast.LENGTH_LONG).show();
-    }
-
     public void disablePointBtn() {
         pointBtn.setEnabled(false);
     }
@@ -45,15 +41,23 @@ public class CalculatorView extends ActivityView {
         pointBtn.setEnabled(true);
     }
 
+    private void showMessage(int message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    public void showMathError() {
+        showMessage(R.string.error_msj);
+    }
+
     public void showDecimalError() {
-        Toast.makeText(getContext(), R.string.decimal_error_msj, Toast.LENGTH_LONG).show();
+        showMessage(R.string.decimal_error_msj);
     }
 
     public void showOperatorError() {
-        Toast.makeText(getContext(), R.string.operator_error_msj, Toast.LENGTH_LONG).show();
+        showMessage(R.string.operator_error_msj);
     }
 
     public void showOperatorErrorAfterEqualPressed(){
-        Toast.makeText(getContext(), R.string.operator_error_after_equal_pressed, Toast.LENGTH_LONG).show();
+        showMessage(R.string.operator_error_after_equal_pressed);
     }
 }

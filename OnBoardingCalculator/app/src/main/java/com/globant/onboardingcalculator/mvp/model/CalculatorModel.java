@@ -7,11 +7,13 @@ public class CalculatorModel {
     private String firstOperand;
     private String secondOperand;
     private char operator;
+    private String result;
 
     public CalculatorModel() {
         firstOperand = EMPTY_STRING;
         secondOperand = EMPTY_STRING;
         operator = EMPTY_CHAR;
+        result = EMPTY_STRING;
     }
 
     public boolean emptyOperation() {
@@ -26,6 +28,7 @@ public class CalculatorModel {
         firstOperand = EMPTY_STRING;
         secondOperand = EMPTY_STRING;
         operator = EMPTY_CHAR;
+        result = EMPTY_STRING;
     }
 
     public void setOperator(char operator) {
@@ -59,8 +62,13 @@ public class CalculatorModel {
     }
 
     public void operate(String result) {
+        this.result = result;
         firstOperand = result;
         operator = EMPTY_CHAR;
         secondOperand = EMPTY_STRING;
+    }
+
+    public String getResult() {
+        return result;
     }
 }

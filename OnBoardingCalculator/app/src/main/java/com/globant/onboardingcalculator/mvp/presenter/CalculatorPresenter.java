@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 import static com.globant.onboardingcalculator.utils.Constants.DECIMAL_POINT;
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
-import static com.globant.onboardingcalculator.utils.Constants.MATH_ERROR;
 import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_DIVIDE;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_MULTIPLY;
@@ -76,11 +75,13 @@ public class CalculatorPresenter {
                     if (parseDouble(model.getSecondOperand()) != parseDouble(NUMBER_ZERO)) {
                         result = String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand())));
                         model.operate(result);
-                    } else
-                        model.operate(MATH_ERROR);
-                    break;
+                    } else {
+                        model.clearOperation();
+                        view.showMathError();
+                        break;
+                    }
             }
-        view.refreshVisor(model.getFirstOperand());
+        view.refreshVisor(model.getResult());
     }
 
     public void onPointPressed() {

@@ -2,7 +2,6 @@ package com.globant.onboardingcalculator.utils;
 
 public class Constants {
     public static final String EMPTY_STRING = "";
-    public static final char EMPTY_CHAR = ' ';
     public static final String NUMBER_ONE = "1";
     public static final String NUMBER_TWO = "2";
     public static final String NUMBER_THREE = "3";
@@ -15,9 +14,10 @@ public class Constants {
     public static final String NUMBER_ZERO = "0";
     public static final String DECIMAL_POINT = ".";
     public static final String MATH_ERROR = "MATH ERROR";
+    public static final String DECIMAL_FORMAT = "#.##";
+    public static final char EMPTY_CHAR = ' ';
     public static final char OPERATOR_PLUS = '+';
     public static final char OPERATOR_SUBSTRACTION = '-';
     public static final char OPERATOR_DIVIDE = '/';
     public static final char OPERATOR_MULTIPLY = 'x';
-    public static final String DECIMAL_FORMAT = "#.##";
 }

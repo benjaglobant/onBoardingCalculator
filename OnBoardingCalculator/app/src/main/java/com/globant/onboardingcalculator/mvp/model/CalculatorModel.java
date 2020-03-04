@@ -17,8 +17,8 @@ public class CalculatorModel {
     }
 
     public boolean emptyOperation() {
-        if (firstOperand.equals(EMPTY_STRING)) {
-            if (secondOperand.equals(EMPTY_STRING))
+        if (firstOperand.isEmpty()) {
+            if (secondOperand.isEmpty())
                 return operator == EMPTY_CHAR;
         }
         return false;
@@ -36,14 +36,14 @@ public class CalculatorModel {
     }
 
     public void setFirstOperand(String firstOperand) {
-        if (this.firstOperand.equals(EMPTY_STRING))
+        if (this.firstOperand.isEmpty())
             this.firstOperand = firstOperand;
         else
             this.firstOperand = this.firstOperand + firstOperand;
     }
 
     public void setSecondOperand(String secondOperand) {
-        if (this.secondOperand.equals(EMPTY_STRING))
+        if (this.secondOperand.isEmpty())
             this.secondOperand = secondOperand;
         else
             this.secondOperand = this.secondOperand + secondOperand;

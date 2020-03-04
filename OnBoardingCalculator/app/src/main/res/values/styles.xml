@@ -8,18 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
-    <style name="btn_num_style">
+    <style name="btn_style">
         <item name="android:textSize">@dimen/btn_textsize</item>
-        <item name="android:layout_width">@dimen/btn_num_layout_width</item>
-        <item name="android:layout_height">@dimen/btn_num_layout_heigth</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/border</item>
         <item name="android:textColor">@color/textcolor</item>
-    </style>
-    <style name="btn_op_style">
-        <item name="android:background">@drawable/border</item>
-        <item name="android:textColor">@color/textcolor</item>
-        <item name="android:textSize">@dimen/btn_textsize</item>
-        <item name="android:layout_width">@dimen/btn_op_layout_width</item>
-        <item name="android:layout_height">@dimen/btn_op_layout_heigth</item>
     </style>
 </resources>

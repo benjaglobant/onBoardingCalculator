@@ -41,7 +41,7 @@ public class CalculatorView extends ActivityView {
         pointBtn.setEnabled(true);
     }
 
-    private void showMessage(int message){
+    private void showMessage(int message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
@@ -57,7 +57,7 @@ public class CalculatorView extends ActivityView {
         showMessage(R.string.operator_error_msj);
     }
 
-    public void showOperatorErrorAfterEqualPressed(){
+    public void showOperatorErrorAfterEqualPressed() {
         showMessage(R.string.operator_error_after_equal_pressed);
     }
 }

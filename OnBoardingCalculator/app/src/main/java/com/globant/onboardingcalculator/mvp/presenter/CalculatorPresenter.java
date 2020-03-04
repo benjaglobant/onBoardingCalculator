@@ -5,9 +5,9 @@ import com.globant.onboardingcalculator.mvp.view.CalculatorView;
 
 import java.text.DecimalFormat;
 
+import static com.globant.onboardingcalculator.utils.Constants.DECIMAL_FORMAT;
 import static com.globant.onboardingcalculator.utils.Constants.DECIMAL_POINT;
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
-import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
 import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_DIVIDE;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_MULTIPLY;
@@ -20,7 +20,7 @@ public class CalculatorPresenter {
 
     private CalculatorModel model;
     private CalculatorView view;
-    private DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_FORMAT);
 
     public CalculatorPresenter(CalculatorModel model, CalculatorView view) {
         this.model = model;
@@ -42,7 +42,7 @@ public class CalculatorPresenter {
     }
 
     public void onNumberPressed(String number) {
-        if (!model.getResult().equals(EMPTY_STRING) && (model.getOperator() == EMPTY_CHAR))
+        if (!model.getResult().isEmpty() && (model.getOperator() == EMPTY_CHAR))
             view.showOperatorErrorAfterEqualPressed();
         else if (model.getOperator() == EMPTY_CHAR) {
             model.setFirstOperand(number);
@@ -82,25 +82,23 @@ public class CalculatorPresenter {
         if (!model.getResult().isEmpty() && (model.getOperator() == EMPTY_CHAR))
             view.showOperatorErrorAfterEqualPressed();
         else if (model.getOperator() == EMPTY_CHAR) {
-                if (model.getFirstOperand().isEmpty()) {
-                    model.setFirstOperand(NUMBER_ZERO);
-                    model.setFirstOperand(DECIMAL_POINT);
-                    view.refreshVisor(model.getFirstOperand());
-                } else if (model.getFirstOperand().contains(DECIMAL_POINT))
-                            view.showDecimalError();
-                        else {
-                            model.setFirstOperand(DECIMAL_POINT);
-                            view.refreshVisor(model.getFirstOperand());
-                }
-            } else if (model.getSecondOperand().isEmpty()) {
-                        model.setSecondOperand(NUMBER_ZERO);
-                        model.setSecondOperand(DECIMAL_POINT);
-                        view.refreshVisor(model.getSecondOperand());
-                    } else if (model.getSecondOperand().contains(DECIMAL_POINT))
-                                view.showDecimalError();
-                            else {
-                                model.setSecondOperand(DECIMAL_POINT);
-                                view.refreshVisor(model.getSecondOperand());
-                            }
+            if (model.getFirstOperand().isEmpty()) {
+                model.setFirstOperand(NUMBER_ZERO + DECIMAL_POINT);
+                view.refreshVisor(model.getFirstOperand());
+            } else if (model.getFirstOperand().contains(DECIMAL_POINT)) {
+                view.showDecimalError();
+            } else {
+                model.setFirstOperand(DECIMAL_POINT);
+                view.refreshVisor(model.getFirstOperand());
+            }
+        } else if (model.getSecondOperand().isEmpty()) {
+            model.setSecondOperand(NUMBER_ZERO + DECIMAL_POINT);
+            view.refreshVisor(model.getSecondOperand());
+        } else if (model.getSecondOperand().contains(DECIMAL_POINT)) {
+            view.showDecimalError();
+        } else {
+            model.setSecondOperand(DECIMAL_POINT);
+            view.refreshVisor(model.getSecondOperand());
         }
     }
+}

@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
+import static java.lang.Integer.parseInt;
 
 public class CalculatorView extends ActivityView {
     @BindView(R.id.visor)
@@ -28,17 +29,12 @@ public class CalculatorView extends ActivityView {
     }
 
     public void clearVisor() {
-        enablePointBtn();
         visor.setText(NUMBER_ZERO);
-        horizontal_scroll_text_view.setScrollX(0);
+        horizontal_scroll_text_view.setScrollX(parseInt(NUMBER_ZERO));
     }
 
     public void refreshVisor(String operand) {
         visor.setText(operand);
-    }
-
-    public void enablePointBtn() {
-        pointBtn.setEnabled(true);
     }
 
     private void showMessage(int message) {

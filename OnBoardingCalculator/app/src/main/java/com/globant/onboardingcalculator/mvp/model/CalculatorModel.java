@@ -49,6 +49,14 @@ public class CalculatorModel {
             this.secondOperand = this.secondOperand + secondOperand;
     }
 
+    public void digitDeletedInFirstOperand(String newOperand){
+        firstOperand = newOperand;
+    }
+
+    public void digitDeletedInSecondOperand(String newOperand){
+        secondOperand = newOperand;
+    }
+
     public String getFirstOperand() {
         return firstOperand;
     }

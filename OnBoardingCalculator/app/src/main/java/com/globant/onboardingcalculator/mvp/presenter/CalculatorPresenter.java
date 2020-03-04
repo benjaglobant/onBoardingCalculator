@@ -14,6 +14,7 @@ import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_MULTIPLY
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_PLUS;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_SUBSTRACTION;
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 
 public class CalculatorPresenter {
@@ -32,11 +33,23 @@ public class CalculatorPresenter {
         view.clearVisor();
     }
 
+    public void onDeletePressed() {
+        if (model.getOperator() == EMPTY_CHAR) {
+            model.digitDeletedInFirstOperand(model.getFirstOperand().substring(parseInt(NUMBER_ZERO), model.getFirstOperand().length() - 1));
+            view.refreshVisor(model.getFirstOperand());
+        } else if (model.getSecondOperand().isEmpty()) {
+            model.setOperator(EMPTY_CHAR);
+            view.refreshVisor(String.valueOf(model.getOperator()));
+        } else {
+            model.digitDeletedInSecondOperand(model.getSecondOperand().substring(parseInt(NUMBER_ZERO), model.getSecondOperand().length() - 1));
+            view.refreshVisor(model.getSecondOperand());
+        }
+    }
+
     public void onOperatorPressed(char operator) {
         if (!model.getFirstOperand().isEmpty()) {
             model.setOperator(operator);
             view.refreshVisor(String.valueOf(operator));
-            view.enablePointBtn();
         } else
             view.showOperatorError();
     }

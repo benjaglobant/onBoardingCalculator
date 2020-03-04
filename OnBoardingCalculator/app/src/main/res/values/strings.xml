@@ -17,8 +17,8 @@
     <string name="btn_text_divide">/</string>
     <string name="btn_text_multiply">X</string>
     <string name="btn_text_clear">CLEAR</string>
-    <string name="error_msj">Error: No se debe dividir por cero.</string>
-    <string name="decimal_error_msj">Error: El operando ya contiene decimales.</string>
-    <string name="operator_error_msj">Error: Debe ingresar el primer operando</string>
-    <string name="operator_error_after_equal_pressed">Error: Debes ingresar un operador</string>
+    <string name="error_msj">Error: You can´t divide by zero</string>
+    <string name="decimal_error_msj">Error: The operand already contains a decimal point</string>
+    <string name="operator_error_msj">Error: You should add the first operand</string>
+    <string name="operator_error_after_equal_pressed">Error: You must add the first operand</string>
 </resources>

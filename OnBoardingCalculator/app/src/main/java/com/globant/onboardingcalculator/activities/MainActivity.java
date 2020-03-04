@@ -102,10 +102,11 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_point)
     public void pressedPoint() {
+        presenter.onPointPressed();
     }
 
     @OnClick(R.id.btn_equal)
     public void pressedEqual() {
+        presenter.onEqualPressed();
     }
-
 }

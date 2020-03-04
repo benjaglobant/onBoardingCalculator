@@ -1,30 +1,34 @@
 package com.globant.onboardingcalculator.mvp.model;
 
-import com.globant.onboardingcalculator.utils.Constants;
+import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
+import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
 
 public class CalculatorModel {
     private String firstOperand;
     private String secondOperand;
     private char operator;
+    private String result;
 
     public CalculatorModel() {
-        firstOperand = Constants.EMPTY_STRING;
-        secondOperand = Constants.EMPTY_STRING;
-        operator = Constants.EMPTY_CHAR;
+        firstOperand = EMPTY_STRING;
+        secondOperand = EMPTY_STRING;
+        operator = EMPTY_CHAR;
+        result = EMPTY_STRING;
     }
 
     public boolean emptyOperation() {
-        if (firstOperand.equals(Constants.EMPTY_STRING)) {
-            if (secondOperand.equals(Constants.EMPTY_STRING))
-                return operator == Constants.EMPTY_CHAR;
+        if (firstOperand.isEmpty()) {
+            if (secondOperand.isEmpty())
+                return operator == EMPTY_CHAR;
         }
         return false;
     }
 
     public void clearOperation() {
-        firstOperand = Constants.EMPTY_STRING;
-        secondOperand = Constants.EMPTY_STRING;
-        operator = Constants.EMPTY_CHAR;
+        firstOperand = EMPTY_STRING;
+        secondOperand = EMPTY_STRING;
+        operator = EMPTY_CHAR;
+        result = EMPTY_STRING;
     }
 
     public void setOperator(char operator) {
@@ -32,14 +36,14 @@ public class CalculatorModel {
     }
 
     public void setFirstOperand(String firstOperand) {
-        if (this.firstOperand.equals(Constants.EMPTY_STRING))
+        if (this.firstOperand.isEmpty())
             this.firstOperand = firstOperand;
         else
             this.firstOperand = this.firstOperand + firstOperand;
     }
 
     public void setSecondOperand(String secondOperand) {
-        if (this.secondOperand.equals(Constants.EMPTY_STRING))
+        if (this.secondOperand.isEmpty())
             this.secondOperand = secondOperand;
         else
             this.secondOperand = this.secondOperand + secondOperand;
@@ -55,5 +59,16 @@ public class CalculatorModel {
 
     public char getOperator() {
         return operator;
+    }
+
+    public void operate(String result) {
+        this.result = result;
+        firstOperand = result;
+        operator = EMPTY_CHAR;
+        secondOperand = EMPTY_STRING;
+    }
+
+    public String getResult() {
+        return result;
     }
 }

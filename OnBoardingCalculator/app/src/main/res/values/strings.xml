@@ -23,4 +23,5 @@
     <string name="operator_error_msj">Error: You should add the first operand</string>
     <string name="operator_error_after_equal_pressed">Error: You must add the first operand</string>
     <string name="operation_cleaned">Operation cleaned</string>
+    <string name="incomplete_operation_msj">Error: Incomplete operation</string>
 </resources>

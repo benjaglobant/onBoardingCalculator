@@ -33,7 +33,7 @@ public class CalculatorView extends ActivityView {
         horizontal_scroll_text_view.setScrollX(parseInt(NUMBER_ZERO));
     }
 
-    public String getVisorText(){
+    public String getVisorText() {
         return String.valueOf(visor.getText());
     }
 
@@ -63,5 +63,9 @@ public class CalculatorView extends ActivityView {
 
     public void showCleanedOperationMessage() {
         showMessage(R.string.operation_cleaned);
+    }
+
+    public void showIncompletedOperationMessage() {
+        showMessage(R.string.incomplete_operation_msj);
     }
 }

@@ -19,9 +19,8 @@ public class CalculatorModel {
     }
 
     public boolean emptyOperation() {
-        if (firstOperand.isEmpty()) {
-            if (secondOperand.isEmpty())
-                return operator == EMPTY_CHAR;
+        if ((firstOperand.isEmpty()) || (secondOperand.isEmpty()) || (operator == EMPTY_CHAR)) {
+            return true;
         }
         return false;
     }
@@ -49,7 +48,7 @@ public class CalculatorModel {
         if (operand.equals(firstOperand)) {
             firstOperand = firstOperand.substring(parseInt(NUMBER_ZERO), firstOperand.length() - 1);
         } else if (operand.equals(secondOperand)) {
-            secondOperand = secondOperand.substring(parseInt(NUMBER_ZERO), firstOperand.length() - 1);
+            secondOperand = secondOperand.substring(parseInt(NUMBER_ZERO), secondOperand.length() - 1);
         }
     }
 
@@ -68,7 +67,6 @@ public class CalculatorModel {
     public void operate(String result) {
         this.result = result;
         firstOperand = result;
-        operator = EMPTY_CHAR;
         secondOperand = EMPTY_STRING;
     }
 

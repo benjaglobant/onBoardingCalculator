@@ -2,21 +2,26 @@ package com.globant.onboardingcalculator.mvp.view;
 
 import android.app.Activity;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.globant.onboardingcalculator.R;
 import com.globant.onboardingcalculator.mvp.view.base.ActivityView;
-import com.globant.onboardingcalculator.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
+import static java.lang.Integer.parseInt;
 
 public class CalculatorView extends ActivityView {
     @BindView(R.id.visor)
     TextView visor;
     @BindView(R.id.btn_point)
     Button pointBtn;
+    @BindView(R.id.horizontal_scroll_text_view)
+    HorizontalScrollView horizontal_scroll_text_view;
 
     public CalculatorView(Activity activity) {
         super(activity);
@@ -24,21 +29,16 @@ public class CalculatorView extends ActivityView {
     }
 
     public void clearVisor() {
-        enablePointBtn();
-        visor.setText(Constants.NUMBER_ZERO);
+        visor.setText(NUMBER_ZERO);
+        horizontal_scroll_text_view.setScrollX(parseInt(NUMBER_ZERO));
+    }
+
+    public String getVisorText() {
+        return String.valueOf(visor.getText());
     }
 
     public void refreshVisor(String operand) {
         visor.setText(operand);
-    }
-
-    public void disablePointBtn() {
-        pointBtn.setEnabled(false);
-    }
-
-
-    public void enablePointBtn() {
-        pointBtn.setEnabled(true);
     }
 
     private void showMessage(int message) {
@@ -59,5 +59,13 @@ public class CalculatorView extends ActivityView {
 
     public void showOperatorErrorAfterEqualPressed() {
         showMessage(R.string.operator_error_after_equal_pressed);
+    }
+
+    public void showCleanedOperationMessage() {
+        showMessage(R.string.operation_cleaned);
+    }
+
+    public void showIncompletedOperationMessage() {
+        showMessage(R.string.incomplete_operation_msj);
     }
 }

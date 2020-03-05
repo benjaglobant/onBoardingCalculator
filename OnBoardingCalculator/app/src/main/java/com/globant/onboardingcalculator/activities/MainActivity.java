@@ -100,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
         presenter.onClearPressed();
     }
 
+    @OnClick(R.id.btn_delete)
+    public void pressedDelete() {
+        presenter.onDeletePressed();
+    }
+
     @OnClick(R.id.btn_point)
     public void pressedPoint() {
         presenter.onPointPressed();

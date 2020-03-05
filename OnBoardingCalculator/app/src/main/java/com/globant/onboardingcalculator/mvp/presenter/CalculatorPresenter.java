@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import static com.globant.onboardingcalculator.utils.Constants.DECIMAL_FORMAT;
 import static com.globant.onboardingcalculator.utils.Constants.DECIMAL_POINT;
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
+import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
 import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_DIVIDE;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_MULTIPLY;
@@ -30,52 +31,75 @@ public class CalculatorPresenter {
     public void onClearPressed() {
         model.clearOperation();
         view.clearVisor();
+        view.showCleanedOperationMessage();
+    }
+
+    public void onDeletePressed() {
+        if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
+            if (!model.getFirstOperand().isEmpty()) {
+                model.setFirstOperand(model.getFirstOperand().substring(0, model.getFirstOperand().length() - 1));
+                view.refreshVisor(model.getFirstOperand());
+            } else {
+                view.showOperatorError();
+            }
+        } else if ((model.getSecondOperand().isEmpty()) && (model.getOperator() != EMPTY_CHAR)) {
+            model.setOperator(EMPTY_CHAR);
+            view.refreshVisor(String.valueOf(model.getOperator()));
+        } else if ((!model.getSecondOperand().isEmpty()) && (model.getOperator() != EMPTY_CHAR)) {
+            model.setSecondOperand(model.getSecondOperand().substring(0, model.getSecondOperand().length() - 1));
+            view.refreshVisor(model.getSecondOperand());
+        } else {
+            view.showOperatorError();
+        }
     }
 
     public void onOperatorPressed(char operator) {
-        if (!model.getFirstOperand().isEmpty()) {
-            model.setOperator(operator);
-            view.refreshVisor(String.valueOf(operator));
-            view.enablePointBtn();
-        } else
-            view.showOperatorError();
+        model.setOperator(operator);
+        if ((!model.getSecondOperand().equals(EMPTY_STRING))) {
+            model.operate(String.valueOf(decimalFormat.format(calculate())));
+        }
+        view.refreshVisor(String.valueOf(model.getOperator()));
     }
 
     public void onNumberPressed(String number) {
-        if (!model.getResult().isEmpty() && (model.getOperator() == EMPTY_CHAR))
+        if ((!model.getResult().isEmpty()) && (model.getOperator() == EMPTY_CHAR))
             view.showOperatorErrorAfterEqualPressed();
         else if (model.getOperator() == EMPTY_CHAR) {
-            model.setFirstOperand(number);
+            model.setFirstOperand(model.getFirstOperand() + number);
             view.refreshVisor(model.getFirstOperand());
         } else {
-            model.setSecondOperand(number);
+            model.setSecondOperand(model.getSecondOperand() + number);
             view.refreshVisor(model.getSecondOperand());
         }
     }
 
+    private Double calculate() {
+        switch (model.getOperator()) {
+            case OPERATOR_PLUS:
+                return (parseDouble(model.getFirstOperand()) + parseDouble(model.getSecondOperand()));
+            case OPERATOR_SUBSTRACTION:
+                return (parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand()));
+            case OPERATOR_MULTIPLY:
+                return (parseDouble(model.getFirstOperand()) * parseDouble(model.getSecondOperand()));
+            case OPERATOR_DIVIDE:
+                if (parseDouble(model.getSecondOperand()) != parseDouble(NUMBER_ZERO)) {
+                    return (parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand()));
+                } else {
+                    model.clearOperation();
+                    view.showMathError();
+                }
+        }
+        return parseDouble(NUMBER_ZERO);
+    }
+
     public void onEqualPressed() {
-        if (!model.emptyOperation())
-            switch (model.getOperator()) {
-                case OPERATOR_PLUS:
-                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) + parseDouble(model.getSecondOperand()))));
-                    break;
-                case OPERATOR_SUBSTRACTION:
-                    String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand())));
-                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand()))));
-                    break;
-                case OPERATOR_MULTIPLY:
-                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) * parseDouble(model.getSecondOperand()))));
-                    break;
-                case OPERATOR_DIVIDE:
-                    if (parseDouble(model.getSecondOperand()) != parseDouble(NUMBER_ZERO)) {
-                        model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand()))));
-                    } else {
-                        model.clearOperation();
-                        view.showMathError();
-                    }
-                    break;
-            }
-        view.refreshVisor(model.getResult());
+        if (model.emptyOperation()) {
+            view.showIncompletedOperationMessage();
+            view.refreshVisor(model.getFirstOperand());
+        } else {
+            model.operate(String.valueOf(decimalFormat.format(calculate())));
+            view.refreshVisor(model.getFirstOperand());
+        }
     }
 
     public void onPointPressed() {

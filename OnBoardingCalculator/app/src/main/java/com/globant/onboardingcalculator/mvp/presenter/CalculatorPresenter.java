@@ -8,13 +8,13 @@ import java.text.DecimalFormat;
 import static com.globant.onboardingcalculator.utils.Constants.DECIMAL_FORMAT;
 import static com.globant.onboardingcalculator.utils.Constants.DECIMAL_POINT;
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
+import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
 import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_DIVIDE;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_MULTIPLY;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_PLUS;
 import static com.globant.onboardingcalculator.utils.Constants.OPERATOR_SUBSTRACTION;
 import static java.lang.Double.parseDouble;
-import static java.lang.Integer.parseInt;
 
 
 public class CalculatorPresenter {
@@ -31,64 +31,76 @@ public class CalculatorPresenter {
     public void onClearPressed() {
         model.clearOperation();
         view.clearVisor();
+        view.showCleanedOperationMessage();
     }
 
     public void onDeletePressed() {
-        if (model.getOperator() == EMPTY_CHAR) {
-            model.digitDeletedInFirstOperand(model.getFirstOperand().substring(parseInt(NUMBER_ZERO), model.getFirstOperand().length() - 1));
-            view.refreshVisor(model.getFirstOperand());
-        } else if (model.getSecondOperand().isEmpty()) {
-            model.setOperator(EMPTY_CHAR);
-            view.refreshVisor(String.valueOf(model.getOperator()));
+        if (!model.emptyOperation()) {
+            if (view.getVisorText().equals(model.getFirstOperand())) {
+                if (model.getOperator() == EMPTY_CHAR) {
+                    model.digitDeletedInOperand(model.getFirstOperand());
+                    view.refreshVisor(model.getFirstOperand());
+                } else if (model.getFirstOperand().isEmpty()) {
+                    view.showOperatorError();
+                }
+            } else if (view.getVisorText().equals(String.valueOf(model.getOperator()))) {
+                model.setOperator(EMPTY_CHAR);
+                view.refreshVisor(model.getFirstOperand());
+            } else if (view.getVisorText().equals(model.getSecondOperand())) {
+                if (model.getSecondOperand().isEmpty()) {
+                    model.digitDeletedInOperand(model.getSecondOperand());
+                    view.refreshVisor(model.getSecondOperand());
+                } else {
+                    view.refreshVisor(String.valueOf(model.getOperator()));
+                }
+            }
         } else {
-            model.digitDeletedInSecondOperand(model.getSecondOperand().substring(parseInt(NUMBER_ZERO), model.getSecondOperand().length() - 1));
-            view.refreshVisor(model.getSecondOperand());
+            view.showCleanedOperationMessage();
         }
     }
 
     public void onOperatorPressed(char operator) {
-        if (!model.getFirstOperand().isEmpty()) {
-            model.setOperator(operator);
-            view.refreshVisor(String.valueOf(operator));
-        } else
-            view.showOperatorError();
+        if ((model.getOperator() != EMPTY_CHAR) || (!model.getSecondOperand().equals(EMPTY_STRING))) {
+            model.operate(String.valueOf(decimalFormat.format(calculate())));
+        }
+        model.setOperator(operator);
+        view.refreshVisor(String.valueOf(model.getOperator()));
     }
 
     public void onNumberPressed(String number) {
         if (!model.getResult().isEmpty() && (model.getOperator() == EMPTY_CHAR))
             view.showOperatorErrorAfterEqualPressed();
         else if (model.getOperator() == EMPTY_CHAR) {
-            model.setFirstOperand(number);
+            model.setFirstOperand(model.getFirstOperand() + number);
             view.refreshVisor(model.getFirstOperand());
         } else {
-            model.setSecondOperand(number);
+            model.setSecondOperand(model.getSecondOperand() + number);
             view.refreshVisor(model.getSecondOperand());
         }
     }
 
+    private Double calculate() {
+        switch (model.getOperator()) {
+            case OPERATOR_PLUS:
+                return (parseDouble(model.getFirstOperand()) + parseDouble(model.getSecondOperand()));
+            case OPERATOR_SUBSTRACTION:
+                return (parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand()));
+            case OPERATOR_MULTIPLY:
+                return (parseDouble(model.getFirstOperand()) * parseDouble(model.getSecondOperand()));
+            case OPERATOR_DIVIDE:
+                if (parseDouble(model.getSecondOperand()) != parseDouble(NUMBER_ZERO)) {
+                    return (parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand()));
+                } else {
+                    model.clearOperation();
+                    view.showMathError();
+                }
+        }
+        return parseDouble(NUMBER_ZERO);
+    }
+
     public void onEqualPressed() {
-        if (!model.emptyOperation())
-            switch (model.getOperator()) {
-                case OPERATOR_PLUS:
-                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) + parseDouble(model.getSecondOperand()))));
-                    break;
-                case OPERATOR_SUBSTRACTION:
-                    String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand())));
-                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) - parseDouble(model.getSecondOperand()))));
-                    break;
-                case OPERATOR_MULTIPLY:
-                    model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) * parseDouble(model.getSecondOperand()))));
-                    break;
-                case OPERATOR_DIVIDE:
-                    if (parseDouble(model.getSecondOperand()) != parseDouble(NUMBER_ZERO)) {
-                        model.operate(String.valueOf(decimalFormat.format(parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand()))));
-                    } else {
-                        model.clearOperation();
-                        view.showMathError();
-                    }
-                    break;
-            }
-        view.refreshVisor(model.getResult());
+        model.operate(String.valueOf(decimalFormat.format(calculate())));
+        view.refreshVisor(model.getFirstOperand());
     }
 
     public void onPointPressed() {

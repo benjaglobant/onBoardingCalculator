@@ -22,4 +22,5 @@
     <string name="decimal_error_msj">Error: The operand already contains a decimal point</string>
     <string name="operator_error_msj">Error: You should add the first operand</string>
     <string name="operator_error_after_equal_pressed">Error: You must add the first operand</string>
+    <string name="operation_cleaned">Operation cleaned</string>
 </resources>

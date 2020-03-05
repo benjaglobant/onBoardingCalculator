@@ -2,6 +2,8 @@ package com.globant.onboardingcalculator.mvp.model;
 
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
+import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
+import static java.lang.Integer.parseInt;
 
 public class CalculatorModel {
     private String firstOperand;
@@ -36,25 +38,19 @@ public class CalculatorModel {
     }
 
     public void setFirstOperand(String firstOperand) {
-        if (this.firstOperand.isEmpty())
-            this.firstOperand = firstOperand;
-        else
-            this.firstOperand = this.firstOperand + firstOperand;
+        this.firstOperand = firstOperand;
     }
 
     public void setSecondOperand(String secondOperand) {
-        if (this.secondOperand.isEmpty())
-            this.secondOperand = secondOperand;
-        else
-            this.secondOperand = this.secondOperand + secondOperand;
+        this.secondOperand = secondOperand;
     }
 
-    public void digitDeletedInFirstOperand(String newOperand){
-        firstOperand = newOperand;
-    }
-
-    public void digitDeletedInSecondOperand(String newOperand){
-        secondOperand = newOperand;
+    public void digitDeletedInOperand(String operand) {
+        if (operand.equals(firstOperand)) {
+            firstOperand = firstOperand.substring(parseInt(NUMBER_ZERO), firstOperand.length() - 1);
+        } else if (operand.equals(secondOperand)) {
+            secondOperand = secondOperand.substring(parseInt(NUMBER_ZERO), firstOperand.length() - 1);
+        }
     }
 
     public String getFirstOperand() {

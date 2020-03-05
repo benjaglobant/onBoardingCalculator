@@ -33,6 +33,10 @@ public class CalculatorView extends ActivityView {
         horizontal_scroll_text_view.setScrollX(parseInt(NUMBER_ZERO));
     }
 
+    public String getVisorText(){
+        return String.valueOf(visor.getText());
+    }
+
     public void refreshVisor(String operand) {
         visor.setText(operand);
     }
@@ -55,5 +59,9 @@ public class CalculatorView extends ActivityView {
 
     public void showOperatorErrorAfterEqualPressed() {
         showMessage(R.string.operator_error_after_equal_pressed);
+    }
+
+    public void showCleanedOperationMessage() {
+        showMessage(R.string.operation_cleaned);
     }
 }

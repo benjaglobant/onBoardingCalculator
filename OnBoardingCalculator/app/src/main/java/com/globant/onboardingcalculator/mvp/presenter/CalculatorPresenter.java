@@ -34,43 +34,63 @@ public class CalculatorPresenter {
         view.showCleanedOperationMessage();
     }
 
+    private void updateVisor() {
+        if (model.getFirstOperand().isEmpty()) {
+            view.refreshVisor(NUMBER_ZERO);
+        } else if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
+            view.refreshVisor(model.getFirstOperand());
+        } else if ((model.getOperator() != EMPTY_CHAR) && (model.getSecondOperand().isEmpty())) {
+            view.refreshVisor(String.valueOf(model.getOperator()));
+        } else if ((!model.getSecondOperand().isEmpty()) && (model.getOperator() != EMPTY_CHAR)) {
+            view.refreshVisor(model.getSecondOperand());
+        }
+    }
+
     public void onDeletePressed() {
         if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
-            if (!model.getFirstOperand().isEmpty()) {
+            if (!model.getFirstOperand().isEmpty() && (!model.getFirstOperand().equals(NUMBER_ZERO))) {
                 model.setFirstOperand(model.getFirstOperand().substring(0, model.getFirstOperand().length() - 1));
-                view.refreshVisor(model.getFirstOperand());
             } else {
+                model.setFirstOperand(NUMBER_ZERO);
                 view.showOperatorError();
             }
         } else if ((model.getSecondOperand().isEmpty()) && (model.getOperator() != EMPTY_CHAR)) {
             model.setOperator(EMPTY_CHAR);
-            view.refreshVisor(String.valueOf(model.getOperator()));
         } else if ((!model.getSecondOperand().isEmpty()) && (model.getOperator() != EMPTY_CHAR)) {
             model.setSecondOperand(model.getSecondOperand().substring(0, model.getSecondOperand().length() - 1));
-            view.refreshVisor(model.getSecondOperand());
         } else {
             view.showOperatorError();
         }
+        updateVisor();
     }
 
     public void onOperatorPressed(char operator) {
-        model.setOperator(operator);
-        if ((!model.getSecondOperand().equals(EMPTY_STRING))) {
-            model.operate(String.valueOf(decimalFormat.format(calculate())));
+        if (model.getFirstOperand().equals(EMPTY_STRING)) {
+            view.showOperatorError();
+        } else if ((model.getOperator() == EMPTY_CHAR) || (model.getSecondOperand().isEmpty())) {
+            model.setOperator(operator);
+        } else if ((!model.getSecondOperand().equals(EMPTY_STRING)) || (!model.getResult().isEmpty())) {
+            model.setResult(String.valueOf(decimalFormat.format(calculate())));
+            model.setFirstOperand(model.getResult());
+            model.setSecondOperand(EMPTY_STRING);
+            model.setOperator(operator);
         }
-        view.refreshVisor(String.valueOf(model.getOperator()));
+        updateVisor();
     }
 
     public void onNumberPressed(String number) {
-        if ((!model.getResult().isEmpty()) && (model.getOperator() == EMPTY_CHAR))
-            view.showOperatorErrorAfterEqualPressed();
-        else if (model.getOperator() == EMPTY_CHAR) {
-            model.setFirstOperand(model.getFirstOperand() + number);
-            view.refreshVisor(model.getFirstOperand());
+        if (model.getOperator() == EMPTY_CHAR) {
+            if (model.getSecondOperand().isEmpty()) {
+                if (model.getResult().isEmpty()) {
+                    model.setFirstOperand(model.getFirstOperand() + number);
+                } else {
+                    view.showOperatorError();
+                }
+            }
         } else {
             model.setSecondOperand(model.getSecondOperand() + number);
-            view.refreshVisor(model.getSecondOperand());
         }
+        updateVisor();
     }
 
     private Double calculate() {
@@ -83,7 +103,7 @@ public class CalculatorPresenter {
                 return (parseDouble(model.getFirstOperand()) * parseDouble(model.getSecondOperand()));
             case OPERATOR_DIVIDE:
                 if (parseDouble(model.getSecondOperand()) != parseDouble(NUMBER_ZERO)) {
-                    return (parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand()));
+                    return parseDouble(model.getFirstOperand()) / parseDouble(model.getSecondOperand());
                 } else {
                     model.clearOperation();
                     view.showMathError();
@@ -93,36 +113,35 @@ public class CalculatorPresenter {
     }
 
     public void onEqualPressed() {
-        if (model.emptyOperation()) {
-            view.showIncompletedOperationMessage();
-            view.refreshVisor(model.getFirstOperand());
+        if (!model.emptyOperation()) {
+            model.setFirstOperand(decimalFormat.format((calculate())));
+            model.setResult(model.getFirstOperand());
+            model.setSecondOperand(EMPTY_STRING);
+            model.setOperator(EMPTY_CHAR);
+            view.refreshVisor(model.getResult());
         } else {
-            model.operate(String.valueOf(decimalFormat.format(calculate())));
-            view.refreshVisor(model.getFirstOperand());
+            view.showIncompletedOperationMessage();
         }
     }
 
     public void onPointPressed() {
-        if (!model.getResult().isEmpty() && (model.getOperator() == EMPTY_CHAR))
-            view.showOperatorErrorAfterEqualPressed();
-        else if (model.getOperator() == EMPTY_CHAR) {
+        if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
             if (model.getFirstOperand().isEmpty()) {
                 model.setFirstOperand(NUMBER_ZERO + DECIMAL_POINT);
-                view.refreshVisor(model.getFirstOperand());
-            } else if (model.getFirstOperand().contains(DECIMAL_POINT)) {
-                view.showDecimalError();
+            } else if (!model.getFirstOperand().contains(DECIMAL_POINT)) {
+                model.setFirstOperand(model.getFirstOperand() + DECIMAL_POINT);
             } else {
-                model.setFirstOperand(DECIMAL_POINT);
-                view.refreshVisor(model.getFirstOperand());
+                view.showDecimalError();
             }
-        } else if (model.getSecondOperand().isEmpty()) {
-            model.setSecondOperand(NUMBER_ZERO + DECIMAL_POINT);
-            view.refreshVisor(model.getSecondOperand());
-        } else if (model.getSecondOperand().contains(DECIMAL_POINT)) {
-            view.showDecimalError();
-        } else {
-            model.setSecondOperand(DECIMAL_POINT);
-            view.refreshVisor(model.getSecondOperand());
+        } else if ((model.getOperator() != EMPTY_CHAR)) {
+            if (model.getSecondOperand().isEmpty()) {
+                model.setSecondOperand(NUMBER_ZERO + DECIMAL_POINT);
+            } else if (!model.getSecondOperand().contains(DECIMAL_POINT)) {
+                model.setSecondOperand(model.getSecondOperand() + DECIMAL_POINT);
+            } else {
+                view.showDecimalError();
+            }
         }
+        updateVisor();
     }
 }

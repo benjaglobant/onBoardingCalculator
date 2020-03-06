@@ -2,8 +2,6 @@ package com.globant.onboardingcalculator.mvp.model;
 
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_CHAR;
 import static com.globant.onboardingcalculator.utils.Constants.EMPTY_STRING;
-import static com.globant.onboardingcalculator.utils.Constants.NUMBER_ZERO;
-import static java.lang.Integer.parseInt;
 
 public class CalculatorModel {
     private String firstOperand;
@@ -19,10 +17,7 @@ public class CalculatorModel {
     }
 
     public boolean emptyOperation() {
-        if ((firstOperand.isEmpty()) || (secondOperand.isEmpty()) || (operator == EMPTY_CHAR)) {
-            return true;
-        }
-        return false;
+        return (firstOperand.isEmpty()) || (secondOperand.isEmpty()) || (operator == EMPTY_CHAR);
     }
 
     public void clearOperation() {
@@ -44,14 +39,6 @@ public class CalculatorModel {
         this.secondOperand = secondOperand;
     }
 
-    public void digitDeletedInOperand(String operand) {
-        if (operand.equals(firstOperand)) {
-            firstOperand = firstOperand.substring(parseInt(NUMBER_ZERO), firstOperand.length() - 1);
-        } else if (operand.equals(secondOperand)) {
-            secondOperand = secondOperand.substring(parseInt(NUMBER_ZERO), secondOperand.length() - 1);
-        }
-    }
-
     public String getFirstOperand() {
         return firstOperand;
     }
@@ -64,10 +51,8 @@ public class CalculatorModel {
         return operator;
     }
 
-    public void operate(String result) {
+    public void setResult(String result) {
         this.result = result;
-        firstOperand = result;
-        secondOperand = EMPTY_STRING;
     }
 
     public String getResult() {

@@ -63,7 +63,9 @@ public class CalculatorPresenter {
     }
 
     public void onOperatorPressed(char operator) {
-        if ((model.getOperator() == EMPTY_CHAR) || (model.getSecondOperand().isEmpty())) {
+        if(model.getFirstOperand().isEmpty()){
+            view.showOperatorError();
+        } else if ((model.getOperator() == EMPTY_CHAR) || (model.getSecondOperand().isEmpty())) {
             model.setOperator(operator);
         } else if ((!model.getSecondOperand().equals(EMPTY_STRING)) || (!model.getResult().isEmpty())) {
             model.setResult(String.valueOf(decimalFormat.format(calculate())));
@@ -73,6 +75,7 @@ public class CalculatorPresenter {
         }
         updateVisor();
     }
+
 
     public void onNumberPressed(String number) {
         if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {

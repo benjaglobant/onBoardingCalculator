@@ -35,7 +35,9 @@ public class CalculatorPresenter {
     }
 
     private void updateVisor() {
-        if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
+        if (model.getFirstOperand().isEmpty()) {
+            view.refreshVisor(NUMBER_ZERO);
+        } else if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
             view.refreshVisor(model.getFirstOperand());
         } else if ((model.getOperator() != EMPTY_CHAR) && (model.getSecondOperand().isEmpty())) {
             view.refreshVisor(String.valueOf(model.getOperator()));
@@ -46,7 +48,7 @@ public class CalculatorPresenter {
 
     public void onDeletePressed() {
         if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
-            if (!model.getFirstOperand().isEmpty()) {
+            if (!model.getFirstOperand().isEmpty() && (!model.getFirstOperand().equals(NUMBER_ZERO))) {
                 model.setFirstOperand(model.getFirstOperand().substring(0, model.getFirstOperand().length() - 1));
             } else {
                 model.setFirstOperand(NUMBER_ZERO);
@@ -63,7 +65,7 @@ public class CalculatorPresenter {
     }
 
     public void onOperatorPressed(char operator) {
-        if(model.getFirstOperand().isEmpty()){
+        if (model.getFirstOperand().equals(EMPTY_STRING)) {
             view.showOperatorError();
         } else if ((model.getOperator() == EMPTY_CHAR) || (model.getSecondOperand().isEmpty())) {
             model.setOperator(operator);
@@ -76,11 +78,16 @@ public class CalculatorPresenter {
         updateVisor();
     }
 
-
     public void onNumberPressed(String number) {
-        if ((model.getSecondOperand().isEmpty()) && (model.getOperator() == EMPTY_CHAR)) {
-            model.setFirstOperand(model.getFirstOperand() + number);
-        } else if (model.getOperator() != EMPTY_CHAR) {
+        if (model.getOperator() == EMPTY_CHAR) {
+            if (model.getSecondOperand().isEmpty()) {
+                if (model.getResult().isEmpty()) {
+                    model.setFirstOperand(model.getFirstOperand() + number);
+                } else {
+                    view.showOperatorError();
+                }
+            }
+        } else {
             model.setSecondOperand(model.getSecondOperand() + number);
         }
         updateVisor();
@@ -108,9 +115,10 @@ public class CalculatorPresenter {
     public void onEqualPressed() {
         if (!model.emptyOperation()) {
             model.setFirstOperand(decimalFormat.format((calculate())));
+            model.setResult(model.getFirstOperand());
             model.setSecondOperand(EMPTY_STRING);
             model.setOperator(EMPTY_CHAR);
-            updateVisor();
+            view.refreshVisor(model.getResult());
         } else {
             view.showIncompletedOperationMessage();
         }

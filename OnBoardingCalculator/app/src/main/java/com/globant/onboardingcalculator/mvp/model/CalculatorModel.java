@@ -17,15 +17,13 @@ public class CalculatorModel {
     }
 
     public boolean emptyOperation() {
-        if ((firstOperand.isEmpty()) || (secondOperand.isEmpty()) || (operator == EMPTY_CHAR)) {
-            return true;
-        }
-        return false;
+        return (firstOperand.isEmpty()) || (secondOperand.isEmpty()) || (operator == EMPTY_CHAR);
     }
 
     public void clearOperation() {
         firstOperand = EMPTY_STRING;
         secondOperand = EMPTY_STRING;
+        operator = EMPTY_CHAR;
         result = EMPTY_STRING;
     }
 
